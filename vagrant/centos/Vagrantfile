@@ -1,0 +1,103 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$bootstrap = <<SCRIPT
+
+yum update
+yum install -y epel-release
+yum upgrade -y
+yum update -y
+yum install -y --nogpgcheck git
+
+SCRIPT
+
+$dns = <<SCRIPT
+
+echo "nameserver 1.1.1.1" > /etc/resolv.conf
+echo "\n10.0.2.2 host" >> /etc/hosts
+
+SCRIPT
+
+$toolkit = <<SCRIPT
+
+cd ~ && rm -rf xiaochen-toolkit ; git clone --depth 1 https://github.com/XiaochenCui/xiaochen-toolkit.git && cd xiaochen-toolkit && ./setup/minimal.sh
+
+SCRIPT
+
+$go = <<SCRIPT
+
+wget -q https://dl.google.com/go/go1.12.2.linux-amd64.tar.gz
+tar -xzf go1.12.2.linux-amd64.tar.gz
+[[ -f "/usr/local/go" ]] || mv go /usr/local
+
+echo "" > ~/.localrc
+echo "\nexport GOROOT=/usr/local/go" >> ~/.localrc
+echo "export PATH=$GOROOT/bin:$PATH" >> ~/.localrc
+
+SCRIPT
+
+$qemu = <<SCRIPT
+
+yum install -y qemu-kvm qemu-img virt-manager libvirt libvirt-python libvirt-client virt-install virt-viewer
+
+SCRIPT
+
+$kafka = <<SCRIPT
+
+[[ -d "librdkafka" ]] && rm -r librdkafka
+git clone https://github.com/edenhill/librdkafka.git
+cd librdkafka
+./configure --prefix /usr
+make
+make install
+
+SCRIPT
+
+$c = <<SCRIPT
+
+yum install -y gdb gcc-c++
+
+SCRIPT
+
+$docker = <<SCRIPT
+
+yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
+yum-config-manager \
+  --add-repo \
+  https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce docker-ce-cli containerd.io
+
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/centos-7.5"
+  config.vm.box_check_update = false
+
+  config.vm.hostname = "centos"
+
+  config.ssh.username = "root"
+  config.ssh.password = "vagrant"
+  config.ssh.insert_key = "true"
+
+  config.vm.synced_folder "~/share", "/share", create: true
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  config.vm.network "private_network", ip: "192.168.2.20"
+
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+    config.proxy.http     = "http://10.0.2.2:1087/"
+    config.proxy.https    = "http://10.0.2.2:1087/"
+    config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
+    #config.yum_proxy.http = "DIRECT"
+    #config.yum_proxy.https = "DIRECT"
+  end
+
+  config.vm.provision "bootstrap", type: "shell",
+    inline: $bootstrap
+
+  config.vm.provision "toolkit", type: "shell",
+    inline: $toolkit
+
+end

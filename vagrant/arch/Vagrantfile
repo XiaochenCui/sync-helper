@@ -1,0 +1,7 @@
+Vagrant.configure("2") do |config|
+    config.vm.box = "archlinux/archlinux"
+
+    config.ssh.username = "root"
+    config.ssh.password = "vagrant"
+    config.ssh.insert_key = "true"
+end

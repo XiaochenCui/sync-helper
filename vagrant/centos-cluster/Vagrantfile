@@ -1,0 +1,61 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$num_instances = 3
+
+$bootstrap = <<SCRIPT
+
+#!/bin/bash
+
+yum install -y epel-release
+yum upgrade -y
+yum update -y
+yum install -y --nogpgcheck git zsh hstr
+
+SCRIPT
+
+$dns = <<SCRIPT
+
+echo "nameserver 1.1.1.1" > /etc/resolv.conf
+
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/centos-7.5"
+
+  config.ssh.username = "root"
+  config.ssh.password = "vagrant"
+  config.ssh.insert_key = "true"
+
+  config.vm.synced_folder "~/share", "/share", create: true
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+    config.proxy.http     = "http://10.0.2.2:1087/"
+    config.proxy.https    = "http://10.0.2.2:1087/"
+    config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
+  end
+
+  config.vm.provision "shell",
+    inline: $bootstrap
+
+  config.vm.provision "shell",
+    inline: $dns
+
+  config.vm.provision "shell",
+    inline: "cd ~ && rm -rf xiaochen-toolkit ; git clone --depth 1 https://github.com/XiaochenCui/xiaochen-toolkit.git && cd xiaochen-toolkit && ./setup/minimal.sh"
+
+  config.vm.define "router" do |config|
+    config.vm.hostname = "router"
+
+    config.vm.network "private_network", ip: "10.0.0.10"
+  end
+
+  (1..$num_instances).each do |machine_id|
+    config.vm.define vm_name = "centos-%02d" % machine_id do |config|
+      config.vm.hostname = vm_name
+
+      config.vm.network "private_network", ip: "10.0.0.#{20+machine_id}"
+    end
+  end
+end

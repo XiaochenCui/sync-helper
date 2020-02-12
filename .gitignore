@@ -1,0 +1,11 @@
+*.sw[po]
+
+config_files/.config/gcloud
+
+.vagrant
+
+htop/
+
+*.pyc
+
+.vscode

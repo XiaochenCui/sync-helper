@@ -1,0 +1,12 @@
+go tool pprof -http=:12345 cpu.1000_reqs_sec_no_optimizations.prof
+curl http://localhost:8080/debug/pprof/profile\?seconds\=29 > cpu.1000_reqs_sec_no_optimizations.prof
+sudo lsof -i -n -P
+gcloud compute instances list --filter="tags:kubernetes-the-hard-way"
+gcloud compute instances list --filter="tags:kubernetes-the-hard-way" | sed -n '2,$ p' | awk '{print $1}' | xargs -n 1 gcloud compute instances start --async
+docker-compose exec console python manage.py makemigrations
+pgcli --host localhost --port 5432 --username postgres --no-password --dbname dfjk-fuel
+docker-compose restart server && docker-compose logs -f --tail 20 server
+docker-compose run web python /code/manage.py runserver 80
+pip freeze > requirements.txt
+ssh -i ~/.ssh/burnish_rsa root@47.99.50.80 "tcpdump -s 0 -U -n -w - -i eth0 not port 22" > /tmp/remote\
+mkfifo /tmp/remote

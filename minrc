@@ -1,0 +1,51 @@
+# vi: set ft=sh :
+
+export PATH=$HOME/bin:$PATH
+
+# tmux aliases
+alias tn="tmux new -s"
+alias ta="tmux attach -t"
+alias tl="tmux ls"
+alias tk="tmux kill-session -t"
+
+# kubernetes
+alias k="kubectl"
+
+alias ipy='python -c '\''import IPython; IPython.terminal.ipapp.launch_new_instance()'\'
+
+alias l='ls -lah'
+
+shopt -s histappend              # append new history items to .bash_history
+export HISTCONTROL=ignorespace   # leading space hides commands from history
+export HISTFILESIZE=10000        # increase history file size (default is 500)
+export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
+export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
+export HSTR_CONFIG=keywords-matching,raw-history-view,prompt-bottom
+# if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
+if [[ $- =~ .*i.*  ]]; then bind '"\C-r": "\C-a hh \C-j"'; fi
+
+source ~/.localrc
+
+export WORKON_HOME=~/Envs
+
+source ~/xiaochen-toolkit/scripts/os/general/z.sh
+
+safe_source() {
+    file=$1
+    if [[ -e "$file" ]]; then
+        source "$file"
+    fi
+}
+
+safe_source "/usr/bin/virtualenvwrapper.sh"
+
+# go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
+export GOROOT=/usr/local/go
+export PATH=$GOROOT/bin:$PATH
+
+export GOPROXY=https://goproxy.io
+
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/pkgconfig/

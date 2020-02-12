@@ -1,0 +1,23 @@
+{
+    "window.zoomLevel": 2,
+    "go.useLanguageServer": true,
+    "files.autoSave": "afterDelay",
+    "http.proxyStrictSSL": false,
+    "http.proxy": "http://127.0.0.1:1087",
+    "explorer.confirmDelete": false,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.enablePreview": true,
+    "files.exclude": {
+        "**/*.pyc": true,
+        "**/*.swp": true
+    },
+    "C_Cpp.updateChannel": "Insiders",
+    "explorer.confirmDragAndDrop": false,
+    "editor.minimap.enabled": true,
+
+    "go.gopath": "~/go:/Users/xiaochen/project/mit6.824",
+    "workbench.colorTheme": "Solarized Light",
+    "git.ignoreLegacyWarning": true
+}

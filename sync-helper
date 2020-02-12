@@ -1,0 +1,106 @@
+#!/bin/zsh
+
+# import libs
+source "printf.sh"
+
+FILENAME_LIST="sync-list.txt"
+CONFIG_FILES_DIR="config_files"
+WORKSPACE=$HOME/"xiaochen-toolkit"
+
+# create some file and directory if not exist
+create() {
+    printf_green "Init local config..."
+    local_config="$HOME/.localrc"
+    [[ -f "$local_config" ]] || touch "$local_config"
+    binary="$HOME/bin"
+    [[ -d "$binary" ]] || mkdir "$binary"
+
+    # clone https://github.com/tmux-plugins/tmux-resurrect
+    REPO_NAME="tmux-resurrect"
+    [[ -d "$HOME/$REPO_NAME" ]] || git clone https://github.com/tmux-plugins/tmux-resurrect $HOME/$REPO_NAME
+}
+
+sync() {
+    printf_green "Start synchronizing..."
+
+    # Check if there are uncommitted changes
+    # https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+    git diff-index --quiet HEAD -- || \
+    printf_green "Workspace unclean, commit staff..."; \
+    git add --all && \
+    git commit -m "update" ; \
+
+    git pull
+
+    git push
+}
+
+link() {
+    printf_green "Start linking..."
+
+    while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
+        SRC="$PWD"/"$CONFIG_FILES_DIR"/"$LINE"
+        if [[ -e "$SRC" ]] ; then
+            DST="$HOME"/"$LINE"
+            BASE=${DST##*/}
+            DIR=${DST%$BASE}
+            [[ -e "$DIR" ]] || mkdir -p "$DIR"
+            if [ $VERBOSE = true ] ; then
+                echo "SRC: $SRC, DST: $DST"
+            fi
+            ln -sfh "$SRC" "$DST"
+        else
+            if [ $VERBOSE = true ] ; then
+                echo "SRC does not exist: $SRC"
+            fi
+        fi
+    done < "$FILENAME_LIST"
+
+    grep \.cxcrc ~/.zshrc 1>/dev/null || printf "\nsource ~/.cxcrc" >> ~/.zshrc
+
+    if [ $VERBOSE = true ] ; then
+        source ~/.zshrc
+    else
+        source ~/.zshrc >/dev/null 2>&1
+    fi
+
+    printf_green "Done"
+}
+
+update_bin() {
+    cp -f $PWD/scripts/os/general/* $HOME/bin
+}
+
+usage() {
+    printf "Usage:\n"
+    printf "    -h | --help\t\tShow help and exit\n"
+    printf "    -v | --verbose\tShow verbosity information\n"
+}
+
+VERBOSE=false
+while [ "$1" != "" ]; do
+    case $1 in
+        -h | --help )
+            usage
+            exit 0
+            ;;
+        -v | --verbose )
+            VERBOSE=true
+            ;;
+        * )
+            usage
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+cd $WORKSPACE
+
+create
+
+sync
+
+link
+
+update_bin

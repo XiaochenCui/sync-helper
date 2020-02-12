@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# import libs
+source "printf.sh"
+source "os.sh"
+
+case $OS in
+    ubuntu)
+    centos)
+        sudo yum -y install sysstat
+        ;;
+    *)
+        printf_red "Not support your system($OS) for now"
+        exit 2
+        ;;
+esac

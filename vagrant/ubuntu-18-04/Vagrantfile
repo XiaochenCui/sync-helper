@@ -1,0 +1,85 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$bootstrap = <<SCRIPT
+
+apt-get update -y
+apt-get install -y git
+
+SCRIPT
+
+$dev = <<SCRIPT
+
+add-apt-repository ppa:ultradvorka/ppa
+apt-get update -y
+apt-get install -y g++
+apt-get install -y google-perftools autoconf git zsh
+apt-get install -y hstr
+apt-get install -y libtool
+apt-get install -y libunwind-dev
+
+SCRIPT
+
+$dns = <<SCRIPT
+
+echo "nameserver 1.1.1.1" > /etc/resolv.conf
+
+SCRIPT
+
+$toolkit = <<SCRIPT
+
+cd ~ && rm -rf xiaochen-toolkit ; git clone --depth 1 https://github.com/XiaochenCui/xiaochen-toolkit.git && cd xiaochen-toolkit && sudo ./setup/minimal.sh
+
+SCRIPT
+
+$go = <<SCRIPT
+
+add-apt-repository ppa:gophers/archive
+apt-get update -y
+apt-get install -y golang-1.11-go
+
+ln -sf /usr/lib/go-1.11/bin/go /usr/local/bin/
+
+SCRIPT
+
+$qemu = <<SCRIPT
+
+apt-get install -y qemu
+
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-18.04"
+
+  #config.vm.network "private_network", ip: "192.168.1.11"
+
+  #config.vm.hostname = "ubuntu"
+
+  config.vm.synced_folder "~/share", "/share"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+    config.proxy.http     = "http://10.0.2.2:1087/"
+    config.proxy.https    = "http://10.0.2.2:1087/"
+    config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
+  end
+
+  config.vm.provision "bootstrap", type: "shell",
+    inline: $bootstrap
+
+  config.vm.provision "toolkit", type: "shell",
+    inline: $toolkit,
+    privileged: false
+
+  config.vm.provision "dns", type: "shell",
+    inline: $dns,
+    run: "never"
+
+  config.vm.provision "go", type: "shell",
+    inline: $go,
+    run: "never"
+
+  config.vm.provision "qemu", type: "shell",
+    inline: $qemu,
+    run: "never"
+end

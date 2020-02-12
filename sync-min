@@ -1,0 +1,35 @@
+# import libs
+source "printf.sh"
+source "os.sh"
+
+download() {
+    cd ~/xiaochen-toolkit
+
+    git fetch --all
+    git reset --hard origin/master
+}
+
+update_bin() {
+    rm -rf ~/bin/*
+
+    ln -sf $HOME/xiaochen-toolkit/sync-min $HOME/bin/
+    cp $PWD/scripts/os/general/* $HOME/bin
+    case $OS in
+        ubuntu)
+            cp $PWD/scripts/os/ubuntu/* $HOME/bin
+            ;;
+        centos)
+            cp $PWD/scripts/os/centos/* $HOME/bin
+            ;;
+        *)
+            printf_red "Not support your system($OS) for now"
+            exit 2
+            ;;
+    esac
+}
+
+download
+
+update_bin
+
+printf_green "Done"

@@ -1,0 +1,3 @@
+[http]
+proxy = "http://127.0.0.1:1087" # HTTP proxy to use for HTTP requests (defaults to none)
+                    # in libcurl format, e.g., "socks5h://host:port"

@@ -1,0 +1,16 @@
+.cxc_aliases
+.cxcrc
+.git-commit-template.txt
+.gitconfig
+.pip
+.tmux.conf
+.vimrc
+.config
+.curlrc
+.hh_favorites
+.hstr_favorites
+.vim/ftplugin
+.vim/templates
+.gradle/init.d
+.pypirc
+.cargo/config

@@ -1,0 +1,7 @@
+pem_pass_phrase: pempassphrase
+
+# the trust store's password (labeled 'keystore')
+truststore: truststore
+
+keystore1: keystore1
+

@@ -1,0 +1,29 @@
+# tmux aliases
+alias tn="tmux new -s"
+alias ta="tmux attach -t"
+alias tl="tmux ls"
+alias tk="tmux kill-session -t"
+
+# python
+alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
+
+# network
+alias pubip="curl -q ifconfig.me"
+
+# git
+alias todaywork="git whatchanged -p --abbrev-commit --pretty=medium --since=\"1 day ago\""
+
+# kubernetes
+alias k="kubectl"
+alias ka='kubectl apply --recursive -f'
+alias kex='kubectl exec -i -t'
+alias klo='kubectl logs -f'
+alias kg='kubectl get'
+alias kd='kubectl describe'
+alias kgp='k get pod -o wide'
+
+# git
+alias git-squash-all='git reset $(git commit-tree HEAD^{tree} -m "A new start")'
+
+# work
+alias wget_hbase="wget --user burnish --password burnish2019 --no-check-certificate"

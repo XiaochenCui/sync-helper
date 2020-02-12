@@ -1,0 +1,125 @@
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# config oh-my-zsh plugins
+plugins=(
+    git
+    docker
+    virtualenv
+    vagrant
+    extract
+    rand-quote
+    cargo
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# zsh prompt config
+ret_status="%(?:%{$fg_bold[green]%}♪ :%{$fg_bold[red]%}♪ )"
+PROMPT='${ret_status}$(virtualenv_prompt_info) %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+
+# For node
+export PATH=~/.npm-global/bin:$PATH
+
+# add sbin to PATH for mac
+export PATH=/usr/local/sbin:$PATH
+
+# include the directory to $fpath for zsh completion
+fpath=(~/.zsh/completion $fpath)
+
+# Make sure compinit is loaded or do it by adding in ~/.zshrc
+#autoload -Uz compinit && compinit -i
+
+fpath=(~/.completion $fpath)
+
+# add this configuration to ~/.zshrc
+export HISTFILE=~/.zsh_history  # ensure history file visibility
+export HSTR_CONFIG=hicolor,keywords-matching,raw-history-view,prompt-bottom
+bindkey -s "\C-r" "\eqhh\n"     # bind hh to Ctrl-r (for Vi mode check doc)
+
+# Bash History Settings
+# https://github.com/dvorka/hstr/blob/master/CONFIGURATION.md#bash-history-settings
+export HISTFILESIZE=10000
+export HISTSIZE=${HISTFILESIZE}
+
+# disable update to speed up zsh init
+#DISABLE_UPDATE_PROMPT=true
+
+#export PATH=$PATH:~/xiaochen-toolkit/scripts/
+export PATH=$PATH:~/bin/
+
+export PYTHONPATH=.
+
+# for ag(the silver search)
+alias ag='ag --path-to-ignore ~/.ignore'
+
+# Disabling Autocorrect in Zsh
+unsetopt correct_all
+
+# activate custom aliases
+source ~/.cxc_aliases
+
+export WORKON_HOME=$HOME/.virtualenvs
+
+source /usr/local/bin/virtualenvwrapper.sh
+
+source $HOME/.gvm/scripts/gvm
+
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin/
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=$GOPATH:$HOME/project/mit6.824
+
+source ~/bin/z.sh
+
+# proxy setting
+#alias go='https_proxy=127.0.0.1:1087 go'
+
+set-proxy() {
+    export HTTP_PROXY=127.0.0.1:1087
+    export HTTPS_PROXY=127.0.0.1:1087
+
+    # for wget
+    export use_proxy=yes
+    export http_proxy=127.0.0.1:1087
+    export https_proxy=127.0.0.1:1087
+
+    # for git
+    export ALL_PROXY=socks5://127.0.0.1:1080
+
+    # for rust cargo
+    export CARGO_HTTP_PROXY=http://127.0.0.1:1087
+}
+
+unset-proxy() {
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
+
+    # for wget
+    unset use_proxy
+    unset http_proxy
+    unset https_proxy
+
+    # for git
+    unset ALL_PROXY
+
+    # for rust cargo
+    unset CARGO_HTTP_PROXY
+}
+
+export GOPROXY=https://goproxy.io
+
+export PATH=$PATH:$HOME/.composer/vendor/bin
+
+# llvm
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+export PATH=/usr/local/bin:$PATH
+
+# rust
+export PATH=$HOME/.cargo/bin:$PATH
+
+quote | cowsay
+
+# activate local config
+source ~/.localrc
