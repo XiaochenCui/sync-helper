@@ -7,6 +7,11 @@ FILENAME_LIST="sync-list.txt"
 CONFIG_FILES_DIR="config_files"
 WORKSPACE=$HOME/"xiaochen-toolkit"
 
+backup_secret() {
+    cp -rf ~/.ssh ~/Documents/secret/
+    cp -rf ~/.ssh ~/Dropbox/secret/
+}
+
 # create some file and directory if not exist
 create() {
     printf_green "Init local config..."
@@ -96,6 +101,8 @@ while [ "$1" != "" ]; do
 done
 
 cd $WORKSPACE
+
+backup_secret
 
 create
 
