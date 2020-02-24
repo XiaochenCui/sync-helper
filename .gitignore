@@ -9,3 +9,5 @@ htop/
 *.pyc
 
 .vscode
+
+.DS_Store
