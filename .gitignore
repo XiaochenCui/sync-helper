@@ -1,6 +1,7 @@
 *.sw[po]
 
 config_files/.config/gcloud
+config_files/.config/wireshark
 
 .vagrant
 
