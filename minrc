@@ -2,19 +2,6 @@
 
 export PATH=$HOME/bin:$PATH
 
-# tmux aliases
-alias tn="tmux new -s"
-alias ta="tmux attach -t"
-alias tl="tmux ls"
-alias tk="tmux kill-session -t"
-
-# kubernetes
-alias k="kubectl"
-
-alias ipy='python -c '\''import IPython; IPython.terminal.ipapp.launch_new_instance()'\'
-
-alias l='ls -lah'
-
 shopt -s histappend              # append new history items to .bash_history
 export HISTCONTROL=ignorespace   # leading space hides commands from history
 export HISTFILESIZE=10000        # increase history file size (default is 500)
@@ -29,6 +16,8 @@ source ~/.localrc
 export WORKON_HOME=~/Envs
 
 source ~/xiaochen-toolkit/scripts/os/general/z.sh
+
+source ~/xiaochen-toolkit/config_files/.cxc_aliases
 
 safe_source() {
     file=$1

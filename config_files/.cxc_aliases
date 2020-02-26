@@ -1,3 +1,9 @@
+# common
+alias l='ls -lah'
+
+# python
+alias ipy='python -c '\''import IPython; IPython.terminal.ipapp.launch_new_instance()'\'
+
 # tmux aliases
 alias tn="tmux new -s"
 alias ta="tmux attach -t"
