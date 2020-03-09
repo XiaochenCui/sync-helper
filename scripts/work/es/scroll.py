@@ -33,7 +33,7 @@ body = {
                 "range": {
                     "@timestamp": {
                         "gte": "2020-03-05T21:00:00",
-                        "lte": "2020-03-05T21:10:00",
+                        "lte": "2020-03-05T21:20:00",
                         "time_zone": "+08:00"
                     }
                 }
@@ -111,6 +111,7 @@ print('total package: {}'.format(c.i))
 
 print('vins: {}'.format(len(vins)))
 print('hit vins: {}'.format(len(c.hit_vins)))
+print(c.hit_vins)
 
 diff_vins = [i for i in vins if i not in c.hit_vins]
 print('diff vins: {}'.format(len(diff_vins)))
