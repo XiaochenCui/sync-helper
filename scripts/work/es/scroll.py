@@ -6,7 +6,7 @@ import time
 host = "10.168.0.225"
 port = 9200
 timeout = 1000
-index = "pro4new2gateway-2020.03.09"
+index = "pro4new2gateway-2020.03.05"
 doc_type = "doc"
 size = 10000
 body = {
@@ -21,8 +21,8 @@ body = {
             "filter": {
                 "range": {
                     "@timestamp": {
-                        "gte": "2020-03-08T00:00:00",
-                        "lt": "2020-03-08T01:00:00",
+                        "gte": "2020-03-05T21:00:00",
+                        "lt": "2020-03-06T17:00:00",
                         "time_zone": "+08:00"
                     }
                 }
