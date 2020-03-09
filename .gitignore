@@ -2,6 +2,7 @@
 
 config_files/.config/gcloud
 config_files/.config/wireshark
+config_files/.config/clash
 
 .vagrant
 
