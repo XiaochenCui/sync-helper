@@ -17,7 +17,7 @@ print("truck count: {}".format(len(vins)))
 host = "10.168.0.225"
 port = 9200
 timeout = 1000
-index = "pro4new2gateway-2020.03.05"
+index = "pro4new2gateway-2020.03.0*"
 doc_type = "doc"
 size = 10000
 body = {
