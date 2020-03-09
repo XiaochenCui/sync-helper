@@ -60,13 +60,16 @@ class Counter(object):
         self.i = 0
         self.hit_vins = set()
 
+        self.package_in_vin = 0
+
     def process_hits(self, hits):
         for item in hits:
             msg = item["_source"]["message"]
             vin = msg[104:104+17]
+            if vin in vins:
+                self.package_in_vin += 1
             self.hit_vins.add(vin)
         self.i += len(hits)
-        print(hits[0]["_source"]["message"])
         print('current count : {}'.format(self.i))
 
 
@@ -79,7 +82,7 @@ if not es.indices.exists(index=index):
 data = es.search(
     index=index,
     doc_type=doc_type,
-    scroll='60m',
+    scroll='120m',
     size=size,
     body=body
 )
