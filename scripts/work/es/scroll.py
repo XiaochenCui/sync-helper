@@ -8,7 +8,7 @@ port = 9200
 timeout = 1000
 index = "pro4new2gateway-2020.03.09"
 doc_type = "doc"
-size = 50000
+size = 10000
 body = {
   "query": {
     "simple_query_string" : {
