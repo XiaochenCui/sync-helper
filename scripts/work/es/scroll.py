@@ -10,14 +10,13 @@ index = "pro4new2gateway-2020.03.09"
 doc_type = "doc"
 size = 1000
 body = {
-   "query" : {
-      "match" : {
-         "message" : {
-            "operator" : "and",
-            "query" : "msg check passed"
-         }
-      }
-   }
+  "query": {
+    "simple_query_string" : {
+        "query": "msg check",
+        "fields": ["message"],
+        "default_operator": "and"
+    }
+  }
 }
 
 # Init Elasticsearch instance
