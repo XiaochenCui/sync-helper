@@ -33,7 +33,7 @@ body = {
                 "range": {
                     "@timestamp": {
                         "gte": "2020-03-05T21:00:00",
-                        "lte": "2020-03-05T21:20:00",
+                        "lte": "2020-03-05T21:05:00",
                         "time_zone": "+08:00"
                     }
                 }
@@ -65,7 +65,7 @@ class Counter(object):
     def process_hits(self, hits):
         for item in hits:
             msg = item["_source"]["message"]
-            vin = msg[104:104+17]
+            vin = msg[110:110+17]
             if vin in vins:
                 self.package_in_vin += 1
             self.hit_vins.add(vin)
