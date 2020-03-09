@@ -1,12 +1,13 @@
 from elasticsearch import Elasticsearch
 import json
+import time
 
 # Define config
 host = "10.168.0.225"
 port = 9200
 timeout = 1000
 index = "pro4forward2nation-2020.03.09"
-doc_type = "_all"
+doc_type = "doc"
 size = 1000
 body = {}
 
@@ -26,6 +27,7 @@ es = Elasticsearch(
 def process_hits(hits):
     for item in hits:
         print(json.dumps(item, indent=2))
+    time.sleep(2)
 
 
 # Check index exists
