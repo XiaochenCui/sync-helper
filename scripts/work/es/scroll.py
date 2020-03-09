@@ -2,6 +2,17 @@ from elasticsearch import Elasticsearch
 import json
 import time
 
+import xlrd
+truck_file = "missing_trucks.xls"
+book = xlrd.open_workbook(truck_file)
+sh = book.sheet_by_index(0)
+vins = list()
+for rx in range(sh.nrows):
+    value = sh.row(rx)[0].value
+    if len(value) == 17:
+        vins.append(value)
+print("truck count: {}".format(len(vins)))
+
 # Define config
 host = "10.168.0.225"
 port = 9200
@@ -22,7 +33,7 @@ body = {
                 "range": {
                     "@timestamp": {
                         "gte": "2020-03-05T21:00:00",
-                        "lte": "2020-03-06T00:00:00",
+                        "lte": "2020-03-06T17:00:00",
                         "time_zone": "+08:00"
                     }
                 }
@@ -47,11 +58,15 @@ es = Elasticsearch(
 class Counter(object):
     def __init__(self):
         self.i = 0
+        self.hit_vins = set()
 
     def process_hits(self, hits):
         for item in hits:
             msg = item["_source"]["message"]
+            vin = msg[104:104+17]
+            self.hit_vins.add(vin)
         self.i += len(hits)
+        print(hits[0]["_source"]["message"])
         print('current count : {}'.format(self.i))
 
 
@@ -89,4 +104,10 @@ while scroll_size > 0:
     # Get the number of results that returned in the last scroll
     scroll_size = len(data['hits']['hits'])
 
-print('total: {}'.format(c.i))
+print('total package: {}'.format(c.i))
+
+print('vins: {}'.format(len(vins)))
+print('hit vins: {}'.format(len(c.hit_vins)))
+
+diff_vins = [i for i in vins if i not in c.hit_vins]
+print('diff vins: {}'.format(len(diff_vins)))
