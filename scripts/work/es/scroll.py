@@ -108,6 +108,7 @@ while scroll_size > 0:
     scroll_size = len(data['hits']['hits'])
 
 print('total package: {}'.format(c.i))
+print('package in vins: {}'.format(c.package_in_vin))
 
 print('vins: {}'.format(len(vins)))
 print('hit vins: {}'.format(len(c.hit_vins)))
