@@ -13,8 +13,8 @@ body = {
   "query": {
     "simple_query_string" : {
         "query": "msg check",
-        "fields": ["message"],
-        "default_operator": "and"
+        # "fields": ["message"],
+        # "default_operator": "and"
     }
   }
 }
@@ -36,7 +36,6 @@ def process_hits(hits):
     for item in hits:
         msg = item["_source"]["message"]
         # print(json.dumps(item, indent=2))
-    time.sleep(2)
 
 
 # Check index exists
@@ -52,6 +51,7 @@ data = es.search(
     size=size,
     body=body
 )
+print(data)
 
 # Get the scroll ID
 sid = data['_scroll_id']
