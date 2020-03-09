@@ -11,14 +11,14 @@ doc_type = "doc"
 size = 10000
 body = {
   "query": {
-    "simple_query_string" : {
-        "query": "msg check",
+    "simple_query_string": {
+      "query": "msg check"
     },
     "range": {
       "timestamp": {
-        "time_zone": "+08:00",        
-        "gte": "2020-03-05T21:00:00", 
-        "lte": "2020-03-05T22:00:00", 
+        "time_zone": "+08:00",
+        "gte": "2020-03-05T21:00:00",
+        "lte": "2020-03-05T22:00:00"
       }
     }
   }
