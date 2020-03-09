@@ -66,8 +66,8 @@ class Counter(object):
         for item in hits:
             msg = item["_source"]["message"]
             vin = msg[110:110+17]
-            if vin in vins:
-                self.package_in_vin += 1
+            # if vin in vins:
+            #     self.package_in_vin += 1
             self.hit_vins.add(vin)
         self.i += len(hits)
         print('current count : {}'.format(self.i))
