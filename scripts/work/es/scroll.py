@@ -6,10 +6,19 @@ import time
 host = "10.168.0.225"
 port = 9200
 timeout = 1000
-index = "pro4forward2nation-2020.03.09"
+index = "pro4new2gateway-2020.03.09"
 doc_type = "doc"
 size = 1000
-body = {}
+body = {
+   "query" : {
+      "match" : {
+         "message" : {
+            "operator" : "and",
+            "query" : "msg check passed"
+         }
+      }
+   }
+}
 
 # Init Elasticsearch instance
 es = Elasticsearch(
@@ -26,7 +35,8 @@ es = Elasticsearch(
 # Process hits here
 def process_hits(hits):
     for item in hits:
-        print(json.dumps(item, indent=2))
+        msg = item["_source"]["message"]
+        # print(json.dumps(item, indent=2))
     time.sleep(2)
 
 
@@ -48,7 +58,7 @@ data = es.search(
 sid = data['_scroll_id']
 scroll_size = len(data['hits']['hits'])
 
-while scroll_size > 0:
+if scroll_size > 0:
     "Scrolling..."
     
     # Before scroll, process current batch of hits
