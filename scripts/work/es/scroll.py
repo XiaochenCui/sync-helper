@@ -13,8 +13,6 @@ body = {
   "query": {
     "simple_query_string" : {
         "query": "msg check",
-        # "fields": ["message"],
-        # "default_operator": "and"
     }
   }
 }
@@ -35,18 +33,13 @@ es = Elasticsearch(
 class Counter(object):
     def __init__(self):
         self.i = 0
-        pass
 
     def process_hits(self, hits):
-        if self.i > 10:
-            return
-
         for item in hits:
             msg = item["_source"]["message"]
             if 'msg check' in msg:
-                print(msg)
                 self.i += 1
-            # print(json.dumps(item, indent=2))
+        print('current count : {}'.format(self.i))
 
 
 # Check index exists
@@ -62,7 +55,6 @@ data = es.search(
     size=size,
     body=body
 )
-# print(data)
 
 # Get the scroll ID
 sid = data['_scroll_id']
