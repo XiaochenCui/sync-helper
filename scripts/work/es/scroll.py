@@ -32,10 +32,21 @@ es = Elasticsearch(
 
 
 # Process hits here
-def process_hits(hits):
-    for item in hits:
-        msg = item["_source"]["message"]
-        # print(json.dumps(item, indent=2))
+class Counter(object):
+    def __init__(self):
+        self.i = 0
+        pass
+
+    def process_hits(self, hits):
+        if self.i > 10:
+            return
+
+        for item in hits:
+            msg = item["_source"]["message"]
+            if 'msg check' in msg:
+                print(msg)
+                self.i += 1
+            # print(json.dumps(item, indent=2))
 
 
 # Check index exists
@@ -51,17 +62,19 @@ data = es.search(
     size=size,
     body=body
 )
-print(data)
+# print(data)
 
 # Get the scroll ID
 sid = data['_scroll_id']
 scroll_size = len(data['hits']['hits'])
 
-if scroll_size > 0:
+c = Counter()
+
+while scroll_size > 0:
     "Scrolling..."
     
     # Before scroll, process current batch of hits
-    process_hits(data['hits']['hits'])
+    c.process_hits(data['hits']['hits'])
     
     data = es.scroll(scroll_id=sid, scroll='2m')
 
