@@ -8,7 +8,7 @@ port = 9200
 timeout = 1000
 index = "pro4new2gateway-2020.03.09"
 doc_type = "doc"
-size = 1000
+size = 50000
 body = {
   "query": {
     "simple_query_string" : {
@@ -38,7 +38,10 @@ class Counter(object):
         for item in hits:
             msg = item["_source"]["message"]
             if 'msg check' in msg:
-                self.i += 1
+                day = int(msg[9:11])
+                hour = int(msg[12:14])
+                if (day == 5 and hour >= 21) or (day == 6 and hour < 17):
+                    self.i += 1
         print('current count : {}'.format(self.i))
 
 
@@ -51,7 +54,7 @@ if not es.indices.exists(index=index):
 data = es.search(
     index=index,
     doc_type=doc_type,
-    scroll='2m',
+    scroll='60m',
     size=size,
     body=body
 )
