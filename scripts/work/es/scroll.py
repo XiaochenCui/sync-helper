@@ -10,18 +10,25 @@ index = "pro4new2gateway-2020.03.09"
 doc_type = "doc"
 size = 10000
 body = {
-  "query": {
-    "simple_query_string": {
-      "query": "msg check"
-    },
-    "range": {
-      "timestamp": {
-        "time_zone": "+08:00",
-        "gte": "2020-03-05T21:00:00",
-        "lte": "2020-03-05T22:00:00"
-      }
+    "query": {
+        "bool": {
+            "must": {
+                "simple_query_string": {
+                    "query": "msg check",
+                    "default_operator": "AND"
+                }
+            },
+            "filter": {
+                "range": {
+                    "@timestamp": {
+                        "gte": "2020-03-08T00:00:00",
+                        "lt": "2020-03-08T01:00:00",
+                        "time_zone": "+08:00"
+                    }
+                }
+            }
+        }
     }
-  }
 }
 
 # Init Elasticsearch instance
@@ -44,11 +51,7 @@ class Counter(object):
     def process_hits(self, hits):
         for item in hits:
             msg = item["_source"]["message"]
-            if 'msg check' in msg:
-                day = int(msg[9:11])
-                hour = int(msg[12:14])
-                if (day == 5 and hour >= 21) or (day == 6 and hour < 17):
-                    self.i += 1
+        self.i += len(hits)
         print('current count : {}'.format(self.i))
 
 
@@ -74,10 +77,10 @@ c = Counter()
 
 while scroll_size > 0:
     "Scrolling..."
-    
+
     # Before scroll, process current batch of hits
     c.process_hits(data['hits']['hits'])
-    
+
     data = es.scroll(scroll_id=sid, scroll='2m')
 
     # Update the scroll ID
@@ -85,3 +88,5 @@ while scroll_size > 0:
 
     # Get the number of results that returned in the last scroll
     scroll_size = len(data['hits']['hits'])
+
+print('total: {}'.format(c.i))
