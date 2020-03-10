@@ -33,7 +33,7 @@ body = {
                 "range": {
                     "@timestamp": {
                         "gte": "2020-03-05T21:00:00",
-                        "lte": "2020-03-06T17:00:00",
+                        "lte": "2020-03-06T19:00:00",
                         "time_zone": "+08:00"
                     }
                 }
@@ -65,9 +65,15 @@ class Counter(object):
     def process_hits(self, hits):
         for item in hits:
             msg = item["_source"]["message"]
+            pkg = msg[100:-1]
+            print(pkg)
+            import binascii
+            print(binascii.hexlify(pkg.encode()))
+            import sys
+            sys.exit()
             vin = msg[110:110+17]
-            # if vin in vins:
-            #     self.package_in_vin += 1
+            if vin in vins:
+                self.package_in_vin += 1
             self.hit_vins.add(vin)
         self.i += len(hits)
         print('current count : {}'.format(self.i))
@@ -112,7 +118,6 @@ print('package in vins: {}'.format(c.package_in_vin))
 
 print('vins: {}'.format(len(vins)))
 print('hit vins: {}'.format(len(c.hit_vins)))
-print(c.hit_vins)
 
 diff_vins = [i for i in vins if i not in c.hit_vins]
 print('diff vins: {}'.format(len(diff_vins)))
