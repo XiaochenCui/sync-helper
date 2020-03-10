@@ -67,6 +67,15 @@ class Counter(object):
             msg = item["_source"]["message"]
             pkg = msg[100:-1]
             print(pkg)
+
+            command_flag = ord(pkg[2])
+            vin = pkg[4:4+17]
+            year = ord(pkg[20])
+            month = ord(pkg[21])
+            day = ord(pkg[22])
+            hour = ord(pkg[23])
+            print([command_flag, vin, year, month, day, hour])
+
             import binascii
             print(binascii.hexlify(pkg.encode()))
             import sys
