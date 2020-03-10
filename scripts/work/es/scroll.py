@@ -65,21 +65,21 @@ class Counter(object):
     def process_hits(self, hits):
         for item in hits:
             msg = item["_source"]["message"]
-            pkg = msg[100:-1]
-            print(pkg)
+            # pkg = msg[101:-1].encode()
+            # print(pkg)
 
-            command_flag = ord(pkg[2])
-            vin = pkg[4:4+17]
-            year = ord(pkg[20])
-            month = ord(pkg[21])
-            day = ord(pkg[22])
-            hour = ord(pkg[23])
-            print([command_flag, vin, year, month, day, hour])
+            # command_flag = pkg[2])
+            # vin = pkg[4:4+17]
+            # year = pkg[20]
+            # month = pkg[21]
+            # day = pkg[22]
+            # hour = pkg[23]
+            # print([command_flag, vin, year, month, day, hour])
 
-            import binascii
-            print(binascii.hexlify(pkg.encode()))
-            import sys
-            sys.exit()
+            # import binascii
+            # print(binascii.hexlify(pkg))
+            # import sys
+            # sys.exit()
             vin = msg[110:110+17]
             if vin in vins:
                 self.package_in_vin += 1
