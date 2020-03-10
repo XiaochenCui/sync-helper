@@ -6,11 +6,11 @@ import xlrd
 truck_file = "missing_trucks.xls"
 book = xlrd.open_workbook(truck_file)
 sh = book.sheet_by_index(0)
-vins = list()
+vins = set()
 for rx in range(sh.nrows):
     value = sh.row(rx)[0].value
     if len(value) == 17:
-        vins.append(value)
+        vins.add(value)
 print("truck count: {}".format(len(vins)))
 
 # Define config
@@ -33,7 +33,7 @@ body = {
                 "range": {
                     "@timestamp": {
                         "gte": "2020-03-05T21:00:00",
-                        "lte": "2020-03-06T19:00:00",
+                        "lte": "2020-03-06T17:00:00",
                         "time_zone": "+08:00"
                     }
                 }
@@ -65,21 +65,22 @@ class Counter(object):
     def process_hits(self, hits):
         for item in hits:
             msg = item["_source"]["message"]
-            # pkg = msg[101:-1].encode()
-            # print(pkg)
+            pkg = eval(msg)[101:-1].encode()
+            print(pkg)
+            import binascii
+            print(binascii.hexlify(pkg))
 
-            # command_flag = pkg[2])
-            # vin = pkg[4:4+17]
-            # year = pkg[20]
-            # month = pkg[21]
-            # day = pkg[22]
-            # hour = pkg[23]
-            # print([command_flag, vin, year, month, day, hour])
+            command_flag = pkg[2])
+            vin = pkg[4:4+17]
+            year = pkg[20]
+            month = pkg[21]
+            day = pkg[22]
+            hour = pkg[23]
+            print([command_flag, vin, year, month, day, hour])
 
-            # import binascii
-            # print(binascii.hexlify(pkg))
-            # import sys
-            # sys.exit()
+            import sys
+            sys.exit()
+
             vin = msg[110:110+17]
             if vin in vins:
                 self.package_in_vin += 1
