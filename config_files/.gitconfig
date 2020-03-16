@@ -21,4 +21,4 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 [socks]
-	proxy = localhost:1080
+	proxy = localhost:1081
