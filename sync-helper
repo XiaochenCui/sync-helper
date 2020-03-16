@@ -31,10 +31,10 @@ sync() {
 
     # Check if there are uncommitted changes
     # https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
-    git diff-index --quiet HEAD -- || \
-    printf_green "Workspace unclean, commit staff..."; \
-    git add --all && \
-    git commit -m "update" ; \
+    git diff-index --quiet HEAD -- ||
+        printf_green "Workspace unclean, commit staff..."
+    git add --all &&
+        git commit -m "update"
 
     git pull
 
@@ -46,25 +46,25 @@ link() {
 
     while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
         SRC="$PWD"/"$CONFIG_FILES_DIR"/"$LINE"
-        if [[ -e "$SRC" ]] ; then
+        if [[ -e "$SRC" ]]; then
             DST="$HOME"/"$LINE"
             BASE=${DST##*/}
             DIR=${DST%$BASE}
             [[ -e "$DIR" ]] || mkdir -p "$DIR"
-            if [ $VERBOSE = true ] ; then
+            if [ $VERBOSE = true ]; then
                 echo "SRC: $SRC, DST: $DST"
             fi
             ln -sfh "$SRC" "$DST"
         else
-            if [ $VERBOSE = true ] ; then
+            if [ $VERBOSE = true ]; then
                 echo "SRC does not exist: $SRC"
             fi
         fi
-    done < "$FILENAME_LIST"
+    done <"$FILENAME_LIST"
 
-    grep \.cxcrc ~/.zshrc 1>/dev/null || printf "\nsource ~/.cxcrc" >> ~/.zshrc
+    grep \.cxcrc ~/.zshrc 1>/dev/null || printf "\nsource ~/.cxcrc" >>~/.zshrc
 
-    if [ $VERBOSE = true ] ; then
+    if [ $VERBOSE = true ]; then
         source ~/.zshrc
     else
         source ~/.zshrc >/dev/null 2>&1
@@ -86,17 +86,17 @@ usage() {
 VERBOSE=false
 while [ "$1" != "" ]; do
     case $1 in
-        -h | --help )
-            usage
-            exit 0
-            ;;
-        -v | --verbose )
-            VERBOSE=true
-            ;;
-        * )
-            usage
-            exit 1
-            ;;
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    -v | --verbose)
+        VERBOSE=true
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
     esac
     shift
 done
