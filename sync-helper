@@ -9,8 +9,8 @@ WORKSPACE=$HOME/"xiaochen-toolkit"
 
 backup_secret() {
     printf_green "Backup secret file to cloud..."
-    # cp -rf ~/.ssh ~/Dropbox/secret/
-    # cp -rf ~/Dropbox/secret/ ~/Documents/secret/
+    cp -rf ~/.ssh ~/Dropbox/secret/
+    cp -rf ~/Dropbox/secret/ ~/Documents/secret/
 }
 
 # create some file and directory if not exist
