@@ -2,7 +2,6 @@
     "window.zoomLevel": 2,
     "go.useLanguageServer": true,
     "files.autoSave": "afterDelay",
-    "http.proxyStrictSSL": false,
     "http.proxy": "http://127.0.0.1:1087",
     "explorer.confirmDelete": false,
     "git.confirmSync": false,
@@ -19,5 +18,8 @@
 
     "go.gopath": "~/go:/Users/xiaochen/project/mit6.824",
     "workbench.colorTheme": "Solarized Light",
-    "git.ignoreLegacyWarning": true
+    "git.ignoreLegacyWarning": true,
+    "rust-client.enableMultiProjectSetup": true,
+    "rust-client.updateOnStartup": true,
+    "http.proxyStrictSSL": false
 }
