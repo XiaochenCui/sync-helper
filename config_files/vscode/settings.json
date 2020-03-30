@@ -21,5 +21,6 @@
     "git.ignoreLegacyWarning": true,
     "rust-client.enableMultiProjectSetup": true,
     "rust-client.updateOnStartup": true,
-    "http.proxyStrictSSL": false
+    "http.proxyStrictSSL": false,
+    "go.autocompleteUnimportedPackages": true
 }
