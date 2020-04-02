@@ -7,8 +7,10 @@ FILENAME_LIST="sync-list.txt"
 CONFIG_FILES_DIR="config_files"
 WORKSPACE=$HOME/"xiaochen-toolkit"
 
+HOST=$(hostname)
+
 backup_secret() {
-    printf_green "Backup secret file to cloud..."
+    printf_green "Backup secret file to cloud...$HOST"
     cp -rf ~/.ssh ~/Dropbox/secret/
     cp -rf ~/Dropbox/secret/ ~/Documents/secret/
 }
