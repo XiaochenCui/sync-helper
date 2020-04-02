@@ -11,9 +11,8 @@ HOST=$(hostname)
 
 backup_secret() {
     printf_green "Backup secret file ($HOST) to cloud..."
-    mkdir ~/Dropbox/secret/$HOST/
-    printf_green "Backup secret file ($HOST) to cloud..."
-    cp -rf ~/.ssh ~/Dropbox/secret/
+    mkdir ~/Dropbox/secret/$HOST/ >/dev/null 2>&1
+    cp -rf ~/.ssh ~/Dropbox/secret/$HOST/
     cp -rf ~/Dropbox/secret/ ~/Documents/secret/
 }
 
