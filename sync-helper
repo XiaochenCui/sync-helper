@@ -10,7 +10,8 @@ WORKSPACE=$HOME/"xiaochen-toolkit"
 HOST=$(hostname)
 
 backup_secret() {
-    printf_green "Backup secret file to cloud...$HOST"
+    printf_green "Backup secret file ($HOST) to cloud..."
+    mkdir ~/Dropbox/secret/$HOST/
     cp -rf ~/.ssh ~/Dropbox/secret/
     cp -rf ~/Dropbox/secret/ ~/Documents/secret/
 }
