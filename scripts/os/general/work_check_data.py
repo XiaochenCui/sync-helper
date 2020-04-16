@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from utils.package_utils.validate import (
     ValidateError,
     validate_package,
