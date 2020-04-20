@@ -201,7 +201,7 @@ New Tab with Current Profile</string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>242 440 796 486 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>643 255 1172 667 0 0 2560 1417 </string>
+	<string>548 336 1392 1041 0 0 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1138 362 1392 1041 0 0 2560 1417 </string>
 	<key>NeverWarnAboutShortLivedSessions_5D87A2E8-867F-4171-9E14-C77139C4C857</key>
@@ -823,7 +823,7 @@ New Tab with Current Profile</string>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>NoSyncPermissionToShowTip</key>
 	<true/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
