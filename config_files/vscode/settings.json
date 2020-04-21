@@ -1,5 +1,5 @@
 {
-    "window.zoomLevel": 2,
+    "window.zoomLevel": 3,
     "go.useLanguageServer": true,
     "files.autoSave": "afterDelay",
     "http.proxy": "http://127.0.0.1:1087",
@@ -19,8 +19,14 @@
     "go.gopath": "~/go:/Users/xiaochen/project/mit6.824",
     "workbench.colorTheme": "Solarized Light",
     "git.ignoreLegacyWarning": true,
-    "rust-client.enableMultiProjectSetup": true,
     "rust-client.updateOnStartup": true,
     "http.proxyStrictSSL": false,
-    "go.autocompleteUnimportedPackages": true
+    "go.autocompleteUnimportedPackages": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": "/Library/Frameworks/Python.framework/Versions/3.6/bin/black",
+    "rust-client.enableMultiProjectSetup": true,
+    "rust-client.channel": "stable"
 }
