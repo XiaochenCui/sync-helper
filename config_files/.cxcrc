@@ -10,6 +10,7 @@ plugins=(
     extract
     rand-quote
     cargo
+    rust
 )
 
 source $ZSH/oh-my-zsh.sh
