@@ -8,11 +8,11 @@ plugins=(
     virtualenv
     vagrant
     extract
-    rand-quote
     cargo
     rust
 )
 
+# 激活 plugins
 source $ZSH/oh-my-zsh.sh
 
 # zsh prompt config
@@ -28,9 +28,6 @@ export PATH=/usr/local/sbin:$PATH
 # include the directory to $fpath for zsh completion
 fpath=(~/.zsh/completion $fpath)
 
-# Make sure compinit is loaded or do it by adding in ~/.zshrc
-#autoload -Uz compinit && compinit -i
-
 fpath=(~/.completion $fpath)
 
 # add this configuration to ~/.zshrc
@@ -42,9 +39,6 @@ bindkey -s "\C-r" "\eqhh\n"     # bind hh to Ctrl-r (for Vi mode check doc)
 # https://github.com/dvorka/hstr/blob/master/CONFIGURATION.md#bash-history-settings
 export HISTFILESIZE=10000
 export HISTSIZE=${HISTFILESIZE}
-
-# disable update to speed up zsh init
-#DISABLE_UPDATE_PROMPT=true
 
 #export PATH=$PATH:~/xiaochen-toolkit/scripts/
 export PATH=$PATH:~/bin/
@@ -72,9 +66,6 @@ export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$GOPATH:$HOME/project/mit6.824
 
 source ~/bin/z.sh
-
-# proxy setting
-#alias go='https_proxy=127.0.0.1:1087 go'
 
 set-proxy() {
     export HTTP_PROXY=127.0.0.1:1087
@@ -123,8 +114,6 @@ export PATH=$HOME/.cargo/bin:$PATH
 # nvm
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-quote | cowsay
 
 # activate local config
 source ~/.localrc
