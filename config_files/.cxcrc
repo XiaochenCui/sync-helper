@@ -116,6 +116,16 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # 默认开启代理
+export HTTP_PROXY=127.0.0.1:1087
+export HTTPS_PROXY=127.0.0.1:1087
+# for wget
+export use_proxy=yes
+export http_proxy=127.0.0.1:1087
+export https_proxy=127.0.0.1:1087
+# for git
+export ALL_PROXY=socks5://127.0.0.1:1080
+# for rust cargo
+export CARGO_HTTP_PROXY=http://127.0.0.1:1087
 
 # 激活本地配置
 source ~/.localrc
