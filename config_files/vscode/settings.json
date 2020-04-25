@@ -27,6 +27,6 @@
     },
     "python.formatting.provider": "black",
     "python.formatting.blackPath": "/Library/Frameworks/Python.framework/Versions/3.6/bin/black",
-    "rust-client.enableMultiProjectSetup": true,
+    "rust-client.enableMultiProjectSetup": null,
     "rust-client.channel": "stable"
 }
