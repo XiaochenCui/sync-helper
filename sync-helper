@@ -11,9 +11,16 @@ HOST=$(hostname)
 
 backup_secret() {
     printf_green "Backup secret file ($HOST) to cloud..."
+
+    # 创建 secret 文件夹
     mkdir ~/Dropbox/secret/$HOST/ >/dev/null 2>&1
+
+    # 复制 ssh 配置 
     cp -rf ~/.ssh ~/Dropbox/secret/$HOST/
+
+    # 复制 vscode 配置
     cp -rf "$HOME/Library/Application Support/Code/User/settings.json" ~/Dropbox/secret/$HOST/vscode-settings.json
+
     cp -rf ~/Dropbox/secret/ ~/Documents/secret/
 }
 
