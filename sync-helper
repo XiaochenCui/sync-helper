@@ -13,7 +13,7 @@ backup_secret() {
     printf_green "Backup secret file ($HOST) to cloud..."
     mkdir ~/Dropbox/secret/$HOST/ >/dev/null 2>&1
     cp -rf ~/.ssh ~/Dropbox/secret/$HOST/
-    cp -rf '$HOME/Library/Application Support/Code/User/settings.json' ~/Dropbox/secret/$HOST/vscode-settings.json
+    cp -rf "$HOME/Library/Application Support/Code/User/settings.json" ~/Dropbox/secret/$HOST/vscode-settings.json
     cp -rf ~/Dropbox/secret/ ~/Documents/secret/
 }
 
