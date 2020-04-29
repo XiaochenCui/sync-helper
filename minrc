@@ -26,7 +26,11 @@ safe_source() {
     fi
 }
 
+# 激活 python 虚拟环境
 safe_source "/usr/bin/virtualenvwrapper.sh"
+
+# 激活 rust cargo 环境
+safe_source "$HOME/.cargo/env"
 
 # go
 export GOPATH=$HOME/go
