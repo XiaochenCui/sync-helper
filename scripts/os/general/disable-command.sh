@@ -21,3 +21,6 @@ echo "备份地址为：$backup_location"
 # 备份
 cp $origin_location $backup_location
 rm $origin_location
+
+echo "备份已完成，指令 $command 已禁用"
+echo "恢复指令为： cp $backup_location $origin_location"
