@@ -129,5 +129,8 @@ export ALL_PROXY=socks5://127.0.0.1:1080
 # for rust cargo
 export CARGO_HTTP_PROXY=http://127.0.0.1:1087
 
+# 必须执行这个指令，不然tab提示用不了
+compinit
+
 # 激活本地配置
 source ~/.localrc
