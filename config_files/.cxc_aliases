@@ -28,8 +28,31 @@ alias kg='kubectl get'
 alias kd='kubectl describe'
 alias kgp='k get pod -o wide'
 
-# git
+# custom git command
 alias git-squash-all='git reset $(git commit-tree HEAD^{tree} -m "A new start")'
 
 # work
 alias wget_hbase="wget --user burnish --password burnish2019 --no-check-certificate"
+
+# git (from zsh)
+alias g='git'
+alias gaa='git add --all'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gca='git commit -v -a'
+alias gclean='git clean -id'
+alias gco='git checkout'
+alias gd='git diff'
+alias gf='git fetch'
+alias gfa='git fetch --all --prune'
+alias gpsup='git push --set-upstream origin $(git_current_branch)'
+alias gl='git pull'
+alias glol="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+alias gp='git push'
+alias grb='git rebase'
+alias grba='git rebase --abort'
+alias grbc='git rebase --continue'
+alias grbi='git rebase -i'
+alias grhh='git reset --hard'
+alias grv='git remote -v'
+alias gst='git status'
