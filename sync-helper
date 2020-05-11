@@ -22,7 +22,7 @@ backup_secret() {
     cp -rf "$HOME/Library/Application Support/Code/User/settings.json" ~/Dropbox/secret/$HOST/vscode-settings.json
 
     # 备份我的世界存档
-    cp -rf "$HOME/Library/Application Support/minecraft/saves" ~/Documents/
+    cp -rf "$HOME/Library/Application Support/minecraft/saves" ~/Documents/ 2>/dev/null
 
     cp -rf ~/Dropbox/secret/ ~/Documents/secret/
 }
