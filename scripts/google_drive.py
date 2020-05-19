@@ -83,7 +83,8 @@ def get_shared_files():
 
             # 更新权限
             try:
-                update_file(f["id"])
+                # update_file(f["id"])
+                pass
             except Exception:
                 pp.pprint(f)
                 print("update failed")
