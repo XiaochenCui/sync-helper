@@ -78,9 +78,6 @@ set-proxy() {
 
     # for git
     export ALL_PROXY=socks5://127.0.0.1:1080
-
-    # for rust cargo
-    export CARGO_HTTP_PROXY=http://127.0.0.1:1087
 }
 
 unset-proxy() {
@@ -110,6 +107,9 @@ export PATH=/usr/local/bin:$PATH
 
 # rust
 export PATH=$HOME/.cargo/bin:$PATH
+
+# rust cargo proxy
+export CARGO_HTTP_PROXY=http://127.0.0.1:1087
 
 # nvm
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
