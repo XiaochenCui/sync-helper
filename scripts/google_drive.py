@@ -81,12 +81,14 @@ def get_shared_files():
         if f["shared"] and f["ownedByMe"]:
             shared_files.append(f)
 
-        # 更新权限
-        try:
-            update_file(f["id"])
-        except Exception:
-            pp.pprint(f)
-            print("update failed")
+            # 更新权限
+            try:
+                update_file(f["id"])
+            except Exception:
+                pp.pprint(f)
+                print("update failed")
+                return
+
     print("shared file count: {}".format(len(shared_files)))
     for f in shared_files:
         print("文档名称: {} (链接： {})".format(f["name"], f["webViewLink"]))
@@ -115,8 +117,8 @@ def update_file(file_id):
     # pp.pprint(result["permissions"])
 
     # insert permissions
-    new_permission = {"type": "anyone", "role": "commenter"}
-    # new_permission = {"type": "anyone", "role": "writer"}
+    # new_permission = {"type": "anyone", "role": "commenter"}
+    new_permission = {"type": "anyone", "role": "writer"}
     result = service.permissions().create(fileId=file_id, body=new_permission).execute()
     # print("insert finished, premissions:")
     # pp.pprint(result)
