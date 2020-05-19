@@ -13,3 +13,5 @@ htop/
 .vscode
 
 .DS_Store
+
+out

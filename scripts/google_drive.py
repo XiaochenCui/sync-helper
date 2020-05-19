@@ -1,6 +1,11 @@
+# api: https://developers.google.com/drive/api/v3/reference/files
+
+import json
 import pprint
 import pickle
 import os.path
+from pathlib import Path
+
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -8,15 +13,13 @@ from google.auth.transport.requests import Request
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"]
 SCOPES = ["https://www.googleapis.com/auth/drive.metadata"]
+SCOPES = ["https://www.googleapis.com/auth/drive"]
 
 pp = pprint.PrettyPrinter()
-
-from pathlib import Path
-
 home = str(Path.home())
 
 
-def get_result():
+def init_service():
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -38,6 +41,12 @@ def get_result():
             pickle.dump(creds, token)
 
     service = build("drive", "v3", credentials=creds)
+    return service
+
+
+# 获取所有共享文件（由我创建的）
+def get_shared_files():
+    service = init_service()
 
     nextPageToken = ""
     # Call the Drive v3 API
@@ -71,11 +80,78 @@ def get_result():
     for f in all_files:
         if f["shared"] and f["ownedByMe"]:
             shared_files.append(f)
+
+        # 更新权限
+        try:
+            update_file(f["id"])
+        except Exception:
+            pp.pprint(f)
+            print("update failed")
     print("shared file count: {}".format(len(shared_files)))
     for f in shared_files:
-        print("文档名称: {}".format(f["name"]))
-        print("文档链接: {}".format(f["webViewLink"]))
+        print("文档名称: {} (链接： {})".format(f["name"], f["webViewLink"]))
+
+
+def get_file():
+    file_id = "1xhXR8Y_Lq-4vW2pTvHQLxFtjUDybfdNa4rspAMX96ns"
+    service = init_service()
+    result = service.files().get(fileId=file_id, fields="*").execute()
+    # print(result)
+    pp.pprint(result)
+    import json
+
+    print(json.dumps(result))
+
+
+# 使文件分享为所有人有权限编辑
+def update_file(file_id):
+    service = init_service()
+
+    # file_id = "1xhXR8Y_Lq-4vW2pTvHQLxFtjUDybfdNa4rspAMX96ns"
+
+    # list permissions
+    # result = service.files().get(fileId=file_id, fields="*").execute()
+    # print("premissions:")
+    # pp.pprint(result["permissions"])
+
+    # insert permissions
+    new_permission = {"type": "anyone", "role": "commenter"}
+    # new_permission = {"type": "anyone", "role": "writer"}
+    result = service.permissions().create(fileId=file_id, body=new_permission).execute()
+    # print("insert finished, premissions:")
+    # pp.pprint(result)
+
+    # result = service.files().update(fileId=file_id, fields="*", key=None, a='b').execute()
+    # print(result)
+
+
+def new_func():
+    from pydrive.auth import GoogleAuth
+    from pydrive.drive import GoogleDrive
+
+    gauth = GoogleAuth()
+    gauth.settings["client_config_file"] = (
+        home + "/Dropbox/secret/google_client_api_credentials.json"
+    )
+    gauth.settings["save_credentials_file"] = (
+        home + "/Dropbox/secret/google_client_api_token.pickle"
+    )
+    gauth.LocalWebserverAuth()
+
+    drive = GoogleDrive(gauth)
+
+    # Create GoogleDriveFile instance with file id of file1.
+    file2 = drive.ListFile()
+    CreateFile({"id": file1["id"]})
+    print("title: %s, mimeType: %s" % (file2["title"], file2["mimeType"]))
+    # title: HelloWorld.txt, mimeType: text/plain
 
 
 if __name__ == "__main__":
-    get_result()
+    get_shared_files()
+
+    # update_file()
+
+    # get_file()
+
+    # new_func()
