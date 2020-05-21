@@ -58,7 +58,10 @@ Vagrant.configure("2") do |config|
     inline: $bootstrap
 
   config.vm.provision "toolkit", type: "shell",
-    inline: $toolkit,
+    inline: $toolkit
+
+    # prevent form toolkit being installed to /root
+    # privileged: false
 
   config.vm.provision "dns", type: "shell",
     inline: $dns,
