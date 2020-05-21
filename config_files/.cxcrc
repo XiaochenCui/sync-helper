@@ -68,13 +68,13 @@ export GOPATH=$GOPATH:$HOME/project/mit6.824
 source ~/bin/z.sh
 
 set-proxy() {
-    export HTTP_PROXY=127.0.0.1:1087
-    export HTTPS_PROXY=127.0.0.1:1087
+    export HTTP_PROXY=http://127.0.0.1:1087
+    export HTTPS_PROXY=http://127.0.0.1:1087
 
     # for wget
     export use_proxy=yes
-    export http_proxy=127.0.0.1:1087
-    export https_proxy=127.0.0.1:1087
+    export http_proxy=http://127.0.0.1:1087
+    export https_proxy=http://127.0.0.1:1087
 
     # for git
     export ALL_PROXY=socks5://127.0.0.1:1080
