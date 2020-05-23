@@ -60,9 +60,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "toolkit", type: "shell",
     inline: $toolkit
 
-    # prevent form toolkit being installed to /root
-    # privileged: false
-
   config.vm.provision "dns", type: "shell",
     inline: $dns,
     run: "never"
