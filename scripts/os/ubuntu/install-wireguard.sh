@@ -1,9 +1,9 @@
 #!/bin/bash
-set +ex
-
 # install wireguard on ubuntu18.04
 
-# sudo apt-get install linux-headers-4.15.0-99-generic
-sudo add-apt-repository ppa:wireguard/wireguard
-sudo apt-get update
-sudo apt-get install wireguard
+set +ex
+
+sudo add-apt-repository -y ppa:wireguard/wireguard
+sudo apt -y update
+sudo apt -y install wireguard
+sudo apt -y install resolvconf
