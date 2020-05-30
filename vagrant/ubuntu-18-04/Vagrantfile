@@ -49,6 +49,15 @@ apt-get install -y qemu
 SCRIPT
 
 Vagrant.configure("2") do |config|
+  $num_instances = 2
+  (1..$num_instances).each do |machine_id|
+    config.vm.define vm_name = "ubuntu-%02d" % machine_id do |config|
+      config.vm.hostname = vm_name
+
+      config.vm.network "private_network", ip: "10.0.0.#{20+machine_id}"
+    end
+  end
+
   config.vm.box = "bento/ubuntu-18.04"
 
   config.vm.synced_folder "~/share", "/share"
