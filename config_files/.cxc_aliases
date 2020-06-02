@@ -49,7 +49,7 @@ alias gfa='git fetch --all --prune'
 alias gpsup='git push --set-upstream origin $(git_current_branch)'
 alias gl='git pull'
 alias glol="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
-alias gp='git push'
+alias gp='git push && git push --tags'
 alias grb='git rebase'
 alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
