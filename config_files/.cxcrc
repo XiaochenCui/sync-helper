@@ -1,6 +1,3 @@
-# auto sync
-$HOME/bin/_auto-sync.sh
-
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -124,6 +121,9 @@ export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
 
 # 必须执行这个指令，不然tab提示用不了
 compinit
+
+# auto sync
+$HOME/bin/_auto-sync.sh
 
 # 激活本地配置
 source ~/.localrc
