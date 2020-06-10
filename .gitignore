@@ -15,3 +15,5 @@ htop/
 .DS_Store
 
 out
+
+*.tmp
