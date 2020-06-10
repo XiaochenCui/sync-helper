@@ -5,7 +5,7 @@ FILE=$DIR/last-sync.tmp
 today=`date +%Y%m%d`
 
 sync() {
-    sync-helper
+    sync-helper -v
     echo $today > $FILE
 }
 
