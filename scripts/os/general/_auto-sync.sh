@@ -6,7 +6,7 @@ today=`date +%Y%m%d`
 
 sync() {
     echo $today > $FILE
-    sync-helper -v
+    sync-helper
 }
 
 if [[ ! -e $FILE ]]; then
