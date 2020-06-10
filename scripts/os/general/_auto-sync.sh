@@ -5,8 +5,8 @@ FILE=$DIR/last-sync.tmp
 today=`date +%Y%m%d`
 
 sync() {
-    sync-helper -v
     echo $today > $FILE
+    sync-helper -v
 }
 
 if [[ ! -e $FILE ]]; then
