@@ -5,7 +5,9 @@ FILE=$DIR/last-sync.tmp
 today=`date +%Y%m%d`
 
 sync() {
+    # 先写入文件，防止无限循环
     echo $today > $FILE
+
     sync-helper
 }
 
