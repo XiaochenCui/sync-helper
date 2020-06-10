@@ -1,5 +1,5 @@
 #!/bin/sh
-source "printf.sh"
+source "_printf.sh"
 
 usage() {
     echo "Usage:"

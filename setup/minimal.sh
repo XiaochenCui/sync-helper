@@ -2,7 +2,7 @@
 
 export PATH=$PATH:~/xiaochen-toolkit/scripts/os/general
 
-source "printf.sh"
+source "_printf.sh"
 source "os.sh"
 
 create() {

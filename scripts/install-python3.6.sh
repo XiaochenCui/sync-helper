@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # import libs
-source "printf.sh"
+source "_printf.sh"
 source "os.sh"
 
 install_ubuntu() {

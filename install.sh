@@ -2,7 +2,7 @@
 
 export PATH=$PATH:~/xiaochen-toolkit/scripts
 
-source "printf.sh"
+source "_printf.sh"
 source "os.sh"
 
 if [ ${SHELL##*/} = "zsh" ]

@@ -1,4 +1,4 @@
-source "printf.sh"
+source "_printf.sh"
 
 if [ -f /etc/os-release ]; then
     # freedesktop.org and systemd
