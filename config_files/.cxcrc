@@ -119,6 +119,9 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
 export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
 
+# replace mac sed with gun sed
+PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+
 # 必须执行这个指令，不然tab提示用不了
 compinit
 
