@@ -41,4 +41,22 @@ export PATH=$GOROOT/bin:$PATH
 
 export GOPROXY=https://goproxy.cn
 
+set_vagrant_proxy() {
+    export CARGO_HTTP_PROXY=http://10.0.2.2:1087
+    export HTTP_PROXY=http://10.0.2.2:1087
+    export HTTPS_PROXY=http://10.0.2.2:1087
+    export use_proxy=yes
+    export http_proxy=http://10.0.2.2:1087
+    export https_proxy=http://10.0.2.2:1087
+}
+
+unset_vagrant_proxy() {
+    unset CARGO_HTTP_PROXY
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
+    unset use_proxy
+    unset http_proxy
+    unset https_proxy
+}
+
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/pkgconfig/

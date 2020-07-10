@@ -128,5 +128,8 @@ compinit
 # auto sync
 $HOME/bin/_auto-sync.sh
 
+# add openssl@1.1
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+
 # 激活本地配置
 source ~/.localrc
