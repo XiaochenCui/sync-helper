@@ -32,6 +32,10 @@ fpath=(~/.completion $fpath)
 
 # add this configuration to ~/.zshrc
 export HISTFILE=~/.zsh_history  # ensure history file visibility
+
+# for hstr < 2.0
+export HH_CONFIG=hicolor,keywords-matching,raw-history-view,prompt-bottom
+# for hstr >= 2.0
 export HSTR_CONFIG=hicolor,keywords-matching,raw-history-view,prompt-bottom
 bindkey -s "\C-r" "\eqhh\n"     # bind hh to Ctrl-r (for Vi mode check doc)
 
