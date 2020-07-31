@@ -1,7 +1,7 @@
+kubectl -n kube-system describe secret `kubectl -n kube-system get secret|grep admin-token|cut -d " " -f1`|grep "token:"|tr -s " "|cut -d " " -f2 | pbcopy
 docker ps | awk '{print $1}' | xargs docker kill
 docker run -it --rm --privileged --pid=host justincormack/nsenter1
 cookiecutter forward_deployment -o forward_deployment
-kubectl -n kube-system describe secret `kubectl -n kube-system get secret|grep admin-token|cut -d " " -f1`|grep "token:"|tr -s " "|cut -d " " -f2 | pbcopy
 sudo lsof -i -n -P
 go tool pprof -http=:12345 cpu.1000_reqs_sec_no_optimizations.prof
 curl http://localhost:8080/debug/pprof/profile\?seconds\=29 > cpu.10_trucks.prof
