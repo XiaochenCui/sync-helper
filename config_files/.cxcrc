@@ -63,7 +63,6 @@ source $HOME/.gvm/scripts/gvm
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin/
 export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$GOPATH:$HOME/project/mit6.824
 
 source ~/bin/z.sh
 
@@ -130,6 +129,9 @@ $HOME/bin/_auto-sync.sh
 
 # add openssl@1.1
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+
+# gun make
+export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
 
 # 激活本地配置
 source ~/.localrc
