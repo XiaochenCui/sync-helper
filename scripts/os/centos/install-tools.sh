@@ -19,4 +19,10 @@ mv /usr/local/bin/kubectx /usr/local/bin/kubectl-ctx
 mv /usr/local/bin/kubens /usr/local/bin/kubectl-ns
 
 # install hstr
-yum install -y hstr
+yum install -y automake autoconf
+yum install -y ncurses-devel
+yum install -y readline-devel
+git clone --depth 1 --branch 2.2 https://github.com/dvorka/hstr.git
+cd hstr
+cd ./build/tarball && ./tarball-automake.sh && cd ../..
+./configure && make && make install
