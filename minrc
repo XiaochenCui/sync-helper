@@ -9,7 +9,7 @@ export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
 export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
 
 # for hstr < 2.0
-export HH_CONFIG=keywords-matching,raw-history-view,prompt-bottom
+export HH_CONFIG="rawhistory,hicolor,keywords"
 # for hstr >= 2.0
 export HSTR_CONFIG=keywords-matching,raw-history-view,prompt-bottom
 

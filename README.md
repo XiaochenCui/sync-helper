@@ -10,7 +10,7 @@
 
 ### Install on public server(bash installed, without github private key)
 
-`cd ~ && rm -rf xiaochen-toolkit ; git clone --depth 1 https://github.com/XiaochenCui/xiaochen-toolkit.git && cd xiaochen-toolkit && ./setup/minimal.sh`
+`cd ~ && rm -rf xiaochen-toolkit ; git clone --depth 1 https://github.com/XiaochenCui/xiaochen-toolkit.git && cd xiaochen-toolkit && ./setup/minimal.sh && source ~/.bashrc`
 
 ## Sync Helper
 
