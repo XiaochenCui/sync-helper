@@ -1,0 +1,11 @@
+[cdh_all]
+dfjk-loadtest001
+dfjk-loadtest00019
+dfjk-loadtest00020
+
+[cdh_master]
+dfjk-loadtest001
+
+[cdh_node]
+dfjk-loadtest00019
+dfjk-loadtest00020

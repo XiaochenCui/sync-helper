@@ -1,0 +1,143 @@
+- hosts:
+    - cdh_all
+  tasks:
+    - name: give a shoot
+      action: ping
+      tags:
+        - setup
+        - clear
+
+    - name: clear db
+      shell: mysql -u root -proot < /root/cdh_install/cdh_clear.sql
+      when: inventory_hostname in groups['cdh_master']
+      tags:
+        - clear
+      ignore_errors: yes
+
+    - name: stop server
+      shell: /opt/cm-5.15.0/etc/init.d/cloudera-scm-server stop
+      when: inventory_hostname in groups['cdh_master']
+      tags:
+        - clear
+      ignore_errors: yes
+
+    - name: stop agent
+      shell: /opt/cm-5.15.0/etc/init.d/cloudera-scm-agent stop
+      tags:
+        - clear
+      ignore_errors: yes
+
+    - name: kill process
+      shell: ps aux | grep 'cm-5.15.0' | grep -v grep | awk '{print $2}' | xargs kill
+      tags:
+        - clear
+      ignore_errors: yes
+
+    - name: umount dir
+      shell: umount /opt/cm-5.15.0/run/cloudera-scm-agent/process
+      tags:
+        - clear
+      ignore_errors: yes
+
+    - name: remove dir
+      shell: |
+        rm -rf /opt/cloudera
+        rm -rf /opt/cm-5.15.0
+      tags:
+        - clear
+
+    - name: update hosts file
+      shell: |
+        echo '
+        ::1     localhost       localhost.localdomain   localhost6      localhost6.localdomain6
+        127.0.0.1       localhost       localhost.localdomain   localhost4      localhost4.localdomain4
+
+        #--- setup flag ---
+        # cdh master
+        10.2.105.73 dfjk-loadtest001
+
+        # cdh node
+        10.2.105.75 dfjk-loadtest00019
+        10.2.105.76 dfjk-loadtest00020
+
+        10.2.105.77 dfjk-loadtest00016
+        10.2.105.79 dfjk-loadtest00017
+        10.2.105.78 dfjk-loadtest00018
+
+        10.2.105.72 dfjk-loadtest002 
+        10.2.105.74 dfjk-loadtest003 
+        10.2.105.80 dfjk-loadtest004 
+        10.2.105.81 dfjk-loadtest005
+        ' > /etc/hosts
+      tags:
+        - setup
+
+    - name: disable hugepage
+      shell: |
+        echo never > /sys/kernel/mm/transparent_hugepage/defrag
+        echo never > /sys/kernel/mm/transparent_hugepage/enabled
+      tags:
+        - setup
+
+    - name: copy cm files to nodes
+      copy:
+        src: /root/packages
+        dest: /root/
+      # 指定运行的 host group
+      when: inventory_hostname in groups['cdh_node']
+      tags:
+        - setup
+
+    - name: update cm
+      shell: tar xvzf /root/packages/cloudera-manager-centos7-cm5.15.0_x86_64.tar.gz -C /opt
+      tags:
+        - setup
+
+    - name: update cm config
+      shell: sed -i -E 's|server_host=.+|server_host=dfjk-loadtest001|' /opt/cm-5.15.0/etc/cloudera-scm-agent/config.ini
+      tags:
+        - setup
+
+    - name: create parcel dir
+      shell: |
+        mkdir -p /opt/cloudera/parcel-repo
+        chown cloudera-scm:cloudera-scm /opt/cloudera/parcel-repo
+        mkdir -p /opt/cloudera/parcels
+        chown cloudera-scm:cloudera-scm /opt/cloudera/parcels
+      tags:
+        - setup
+
+    - name: copy parcel
+      shell: |
+        cp /root/packages/* /opt/cloudera/parcel-repo/
+        mv /opt/cloudera/parcel-repo/CDH-5.15.0-1.cdh5.15.0.p0.21-el7.parcel.sha1 /opt/cloudera/parcel-repo/CDH-5.15.0-1.cdh5.15.0.p0.21-el7.parcel.sha
+        mv /opt/cloudera/parcel-repo/KAFKA-4.1.0-1.4.1.0.p0.4-el7.parcel.sha1 /opt/cloudera/parcel-repo/KAFKA-4.1.0-1.4.1.0.p0.4-el7.parcel.sha
+      when: inventory_hostname in groups['cdh_master']
+      tags:
+        - setup
+
+    - name: copy mysql driver
+      shell: |
+        mkdir -p /opt/cloudera/parcels/CDH-5.15.0-1.cdh5.15.0.p0.21/lib/hive/lib/
+        cp /root/packages/mysql-connector-java-5.1.39.jar /opt/cloudera/parcels/CDH-5.15.0-1.cdh5.15.0.p0.21/lib/hive/lib/mysql-connector-java.jar
+      tags:
+        - setup
+
+    - name: prepare database
+      shell: /opt/cm-5.15.0/share/cmf/schema/scm_prepare_database.sh mysql cm -h localhost -uroot -proot --scm-host localhost scm scm scm
+      when: inventory_hostname in groups['cdh_master']
+      tags:
+        - setup
+      register: command_result
+      failed_when: "'Error' in command_result.stderr"
+
+    - name: restart service
+      shell: /opt/cm-5.15.0/etc/init.d/cloudera-scm-server restart
+      when: inventory_hostname in groups['cdh_master']
+      tags:
+        - setup
+    - name: restart agent service
+      shell: /opt/cm-5.15.0/etc/init.d/cloudera-scm-agent restart
+      when: inventory_hostname in groups['cdh_all']
+      tags:
+        - setup
