@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PATH=$PATH:~/xiaochen-toolkit/scripts
+export PATH=$PATH:~/xiaochen-toolkit/scripts/os/general
 
 source "_printf.sh"
 source "os.sh"
