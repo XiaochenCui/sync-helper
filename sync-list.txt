@@ -4,7 +4,6 @@
 .gitconfig
 .pip
 .tmux.conf
-.vimrc
 .config
 .curlrc
 .hh_favorites
