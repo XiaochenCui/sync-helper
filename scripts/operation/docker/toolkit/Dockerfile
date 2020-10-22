@@ -14,3 +14,6 @@ RUN apt-get -y install kafkacat
 
 # ping
 RUN apt-get -y install iputils-ping
+
+# vim
+RUN apt-get -y install vim
