@@ -10,6 +10,7 @@ plugins=(
     extract
     cargo
     rust
+    svn
 )
 
 safe_source() {
