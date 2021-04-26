@@ -38,11 +38,11 @@ safe_source "/usr/bin/virtualenvwrapper.sh"
 safe_source "$HOME/.cargo/env"
 
 # go
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-
-export GOROOT=/usr/local/go
-export PATH=$GOROOT/bin:$PATH
+#export GOPATH=$HOME/go
+#export PATH=$PATH:$GOPATH/bin
+#
+#export GOROOT=/usr/local/go
+#export PATH=$GOROOT/bin:$PATH
 
 export GOPROXY=https://goproxy.cn
 
