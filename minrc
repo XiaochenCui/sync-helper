@@ -2,11 +2,12 @@
 
 export PATH=$HOME/bin:$PATH
 
-shopt -s histappend              # append new history items to .bash_history
-export HISTCONTROL=ignorespace   # leading space hides commands from history
-export HISTFILESIZE=10000        # increase history file size (default is 500)
-export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
-export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
+# hstr config
+shopt -s histappend                                               # append new history items to .bash_history
+export HISTCONTROL=ignorespace                                    # leading space hides commands from history
+export HISTFILESIZE=10000                                         # increase history file size (default is 500)
+export HISTSIZE=${HISTFILESIZE}                                   # increase history size (default is 500)
+export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}" # mem/file sync
 
 # for hstr < 2.0
 export HH_CONFIG="rawhistory,hicolor,keywords"
@@ -14,7 +15,7 @@ export HH_CONFIG="rawhistory,hicolor,keywords"
 export HSTR_CONFIG=keywords-matching,raw-history-view,prompt-bottom
 
 # if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
-if [[ $- =~ .*i.*  ]]; then bind '"\C-r": "\C-a hh \C-j"'; fi
+if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh \C-j"'; fi
 
 source ~/.localrc
 
@@ -37,31 +38,36 @@ safe_source "/usr/bin/virtualenvwrapper.sh"
 # 激活 rust cargo 环境
 safe_source "$HOME/.cargo/env"
 
-# go
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-
-export GOROOT=/usr/local/go
-export PATH=$GOROOT/bin:$PATH
-
 export GOPROXY=https://goproxy.cn
 
-set_vagrant_proxy() {
-    export CARGO_HTTP_PROXY=http://10.0.2.2:1087
-    export HTTP_PROXY=http://10.0.2.2:1087
-    export HTTPS_PROXY=http://10.0.2.2:1087
+set-proxy() {
+    export HTTP_PROXY=http://127.0.0.1:1087
+    export HTTPS_PROXY=http://127.0.0.1:1087
+
+    # for wget
     export use_proxy=yes
-    export http_proxy=http://10.0.2.2:1087
-    export https_proxy=http://10.0.2.2:1087
+    export http_proxy=http://127.0.0.1:1087
+    export https_proxy=http://127.0.0.1:1087
+
+    # for git
+    export ALL_PROXY=socks5://127.0.0.1:1080
+
+    # rust cargo proxy
+    export CARGO_HTTP_PROXY=http://127.0.0.1:1087
 }
 
-unset_vagrant_proxy() {
-    unset CARGO_HTTP_PROXY
+unset-proxy() {
     unset HTTP_PROXY
     unset HTTPS_PROXY
+
+    # for wget
     unset use_proxy
     unset http_proxy
     unset https_proxy
-}
 
-export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/pkgconfig/
+    # for git
+    unset ALL_PROXY
+
+    # for rust cargo
+    unset CARGO_HTTP_PROXY
+}
