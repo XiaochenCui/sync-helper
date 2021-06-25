@@ -1,0 +1,28 @@
+version: "3.5"
+
+services:
+  exporter:
+    image: prom/node-exporter:latest
+    ports:
+     - 9100:9100
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - ./volumes/grafana:/var/lib/grafana
+
+  prometheus:
+    image: prom/prometheus:v2.21.0
+    ports:
+      - 9090:9090
+    volumes:
+      - ./volumes/prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+
+
+volumes:
+  prometheus-data:
+  grafana-data:
